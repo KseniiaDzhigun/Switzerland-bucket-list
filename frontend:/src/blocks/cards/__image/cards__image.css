@@ -1,0 +1,7 @@
+.cards__image {
+  cursor: pointer;
+  height: 282px;
+  width: 282px;
+  object-fit: cover;
+  object-position: center;
+}

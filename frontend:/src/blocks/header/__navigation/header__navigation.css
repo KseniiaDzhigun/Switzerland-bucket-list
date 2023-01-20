@@ -1,0 +1,10 @@
+.header__navigation {
+    display: flex;
+    align-items: flex-end;
+}
+
+@media screen and (max-width: 1023px) {
+    .header__navigation {
+        margin-right: 30px;
+    }
+}

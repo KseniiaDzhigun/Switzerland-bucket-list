@@ -1,0 +1,15 @@
+.popup__title_type_submit {
+  margin: 0 0 32px;
+}
+
+@media screen and (max-width: 619px) {
+  .popup__title_type_submit {
+    min-width: 300px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .popup__title_type_submit {
+    min-width: 238px;
+  }
+}

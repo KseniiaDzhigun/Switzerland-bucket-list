@@ -1,0 +1,6 @@
+.cards__caption {
+  margin: 22px 18px 18px 21px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

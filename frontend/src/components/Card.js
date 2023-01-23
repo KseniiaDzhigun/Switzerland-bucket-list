@@ -7,7 +7,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete}) {
 
     const isOwn = card.owner._id === currentUser._id;
 
-    const isLiked = card.likes.some(likeElement => likeElement._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
 
     //Задаём обработчику (пробрасывается в виде пропса через Main и App) нужное значение с данными карточки
     const handleCardClick = () => {

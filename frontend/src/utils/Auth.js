@@ -31,6 +31,14 @@ export const login = ({ password, email }) => {
         .then(handleResponse)
 };
 
+export const signout = () => {
+    return fetch(`${BASE_URL}/signout`, {
+        method: 'GET',
+        credentials: 'include',
+    })
+        .then(handleResponse)
+};
+
 export const checkToken = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',

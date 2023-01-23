@@ -14,7 +14,7 @@ const {
 
 const getCards = async (req, res, next) => {
   try {
-    const cards = await Card.find({});
+    const cards = await Card.find({}).populate('owner');
     return res.status(OK).json(cards);
   } catch (e) {
     return next(e);
@@ -69,7 +69,7 @@ const putLike = async (req, res, next) => {
       cardId,
       { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
       { new: true }, // обработчик then получит на вход обновлённую запись
-    );
+    ).populate('owner');
 
     if (!cardWithLike) {
       return next(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
@@ -92,7 +92,7 @@ const removeLike = async (req, res, next) => {
       cardId,
       { $pull: { likes: req.user._id } }, // убрать _id из массива
       { new: true }, // обработчик then получит на вход обновлённую запись
-    );
+    ).populate('owner');
 
     if (!cardWithoutLike) {
       return next(new NotFoundError(NOT_FOUND_MESSAGE_CARD));

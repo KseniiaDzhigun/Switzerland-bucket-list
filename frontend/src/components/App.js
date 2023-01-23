@@ -42,7 +42,7 @@ function App() {
         console.log(`Ошибка: ${err}`)
       });
     }
-  }, [loggedIn]) 
+  }, [loggedIn])
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
@@ -101,7 +101,7 @@ function App() {
     const token = localStorage.getItem('userId');
     if (token) {
       api.getInitialCards().then((initialCards) => {
-        setCards(initialCards);
+        setCards(initialCards.reverse());
       }).catch((err) => {
         console.log(`Ошибка: ${err}`)
       });
@@ -110,7 +110,7 @@ function App() {
 
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(likeElement => likeElement._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
 
     //Реакт перерисовает только карточку, на которую поставили/убрали лайк. При обновлении стейта передаем колбэк 
     //На вход идет значение текущего стейта, на выход — не совершенно новое, а обновленное значение карточек
@@ -200,10 +200,23 @@ function App() {
   }
 
   function handleLogout() {
-    setLoggedIn(false);
-    localStorage.removeItem('userId');
-    history.push('/');
+    setLoading(true);
+    Auth.signout().then((res) => {
+      setLoggedIn(false);
+      localStorage.removeItem('userId');
+      history.push('/');
+    }).catch((err) => {
+      console.log(`Не удалось выйти из профиля: ${err}`)
+    }).finally(() => {
+      setLoading(false);
+    })
   }
+
+  // function handleLogout() {
+  //   setLoggedIn(false);
+  //   localStorage.removeItem('userId');
+  //   history.push('/');
+  // }
 
   if (loading) {
     return <div>...Loading</div>

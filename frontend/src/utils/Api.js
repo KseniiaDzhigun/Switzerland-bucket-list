@@ -16,16 +16,16 @@ class Api {
 
   getInitialUserInfo() {
     return fetch(`${this._address}/users/me`, {
-      method: "GET",
-      headers: this._headers,
+      credentials: 'include',
+      method: 'GET',
     })
       .then(this._handleResponse);
   }
 
   getInitialCards() {
     return fetch(`${this._address}/cards`, {
-      method: "GET",
-      headers: this._headers,
+      credentials: 'include',
+      method: 'GET',
     })
       .then(this._handleResponse);
   }
@@ -38,7 +38,8 @@ class Api {
 
   setUserInfo(data) {
     return fetch(`${this._address}/users/me`, {
-      method: "PATCH",
+      credentials: 'include',
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data)
     })
@@ -47,7 +48,8 @@ class Api {
 
   addNewCard(data) {
     return fetch(`${this._address}/cards`, {
-      method: "POST",
+      credentials: 'include',
+      method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data)
     })
@@ -56,15 +58,16 @@ class Api {
 
   deleteCard(id) {
     return fetch(`${this._address}/cards/${id}`, {
-      method: "DELETE",
-      headers: this._headers,
+      credentials: 'include',
+      method: 'DELETE',
     })
       .then(this._handleResponse);
   }
 
   _addLikeCard(id) {
     return fetch(`${this._address}/cards/${id}/likes`, {
-      method: "PUT",
+      credentials: 'include',
+      method: 'PUT',
       headers: this._headers,
     })
       .then(this._handleResponse);
@@ -72,7 +75,8 @@ class Api {
 
   _removeLikeCard(id) {
     return fetch(`${this._address}/cards/${id}/likes`, {
-      method: "DELETE",
+      credentials: 'include',
+      method: 'DELETE',
       headers: this._headers,
     })
       .then(this._handleResponse);
@@ -89,7 +93,8 @@ class Api {
 
   changeAvatar(data) {
     return fetch(`${this._address}/users/me/avatar`, {
-      method: "PATCH",
+      credentials: 'include',
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data)
     })
@@ -100,7 +105,6 @@ class Api {
 const api = new Api({
   baseUrl: 'http://localhost:3000',
   headers: {
-    // authorization: 'a5a02e60-10c8-46a9-914b-480856b1458a',
     'Content-Type': 'application/json'
   }
 });

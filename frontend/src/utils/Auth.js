@@ -22,6 +22,7 @@ export const register = ({ password, email }) => {
 export const login = ({ password, email }) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -33,9 +34,10 @@ export const login = ({ password, email }) => {
 export const checkToken = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            // 'Authorization': `Bearer ${token}`,
         }
     })
         .then(handleResponse)

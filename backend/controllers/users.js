@@ -159,7 +159,14 @@ const login = async (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       })
-      .send({ message: 'Токен записан' });
+      // .send({ message: 'Токен записан' });
+      .status(OK).json({
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+        email: user.email,
+        _id: user.id,
+      });
   } catch (e) {
     return next(e);
   }

@@ -34,12 +34,15 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
-    api.getInitialUserInfo().then((initialUserInfo) => {
-      setCurrentUser(initialUserInfo);
-    }).catch((err) => {
-      console.log(`Ошибка: ${err}`)
-    });
-  }, [])
+    const token = localStorage.getItem('userId');
+    if (token) {
+      api.getInitialUserInfo().then((initialUserInfo) => {
+        setCurrentUser(initialUserInfo);
+      }).catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      });
+    }
+  }, [loggedIn]) 
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
@@ -95,12 +98,15 @@ function App() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api.getInitialCards().then((initialCards) => {
-      setCards(initialCards);
-    }).catch((err) => {
-      console.log(`Ошибка: ${err}`)
-    });
-  }, []) //Передаем в зависимости пустой массив, эффект будет вызван всего один раз
+    const token = localStorage.getItem('userId');
+    if (token) {
+      api.getInitialCards().then((initialCards) => {
+        setCards(initialCards);
+      }).catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      });
+    }
+  }, [loggedIn]) //Передаем в зависимости пустой массив, эффект будет вызван всего один раз
 
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
@@ -135,13 +141,13 @@ function App() {
     });
   }
 
-  function tokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
+  function authCheck() {
+    const token = localStorage.getItem('userId');
+    if (token) {
       // Запрос для проверки валидности токена и получения email для вставки в шапку сайта
-      Auth.checkToken(jwt).then((res) => {
+      Auth.checkToken(token).then((res) => {
         if (res) {
-          setUserEmail(res.data.email);
+          setUserEmail(res.email);
           setLoggedIn(true);
           history.push('/');
         }
@@ -156,7 +162,7 @@ function App() {
 
   //Проверяем валидность токена при запуске/обновлении страницы только один раз
   useEffect(() => {
-    tokenCheck()
+    authCheck()
   }, []);
 
   //Используем хук для перекидывания пользователя по страницам
@@ -181,12 +187,10 @@ function App() {
   function handleLogin(data) {
     setLoading(true);
     Auth.login(data).then((res) => {
-      if (res.token) {
-        //Сохраняем в localStorage jwt токен который прилетает с сервера
-        localStorage.setItem('jwt', res.token);
-        setLoggedIn(true);
-        history.push('/');
-      }
+      //Сохраняем в localStorage id пользователя, так как токен приходит в куках
+      localStorage.setItem('userId', res._id);
+      setLoggedIn(true);
+      history.push('/');
     }).catch((err) => {
       setLoggedIn(false);
       console.log(`Пользователь не найден : ${err}`)
@@ -197,7 +201,7 @@ function App() {
 
   function handleLogout() {
     setLoggedIn(false);
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('userId');
     history.push('/');
   }
 

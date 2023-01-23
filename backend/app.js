@@ -15,10 +15,10 @@ const { requestLogger } = require('./middlewares/logger');
 const PORT = 3000;
 
 const app = express();
-app.use(cookieParser());
-app.use(cors());
+app.use(cookieParser()); // Объект req будет обогащаться cookies
+app.use(cors({ origin: ['http://localhost:3001', 'https://dzhigun.students.nomoredomains.rocks'], credentials: true, maxAge: 60 }));
 
-app.use(express.json());
+app.use(express.json()); // It parses incoming JSON requests and puts the parsed data in req.body
 app.use(requestLogger); // подключаем логгер запросов
 
 // за ним идут все обработчики роутов

@@ -33,7 +33,7 @@ app.use(errors());
 // Централизованный обработчик ошибок
 app.use(err);
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+mongoose.connect('mongodb://127.0.0.1:27017/mestofull', {
   useNewUrlParser: true,
 }, () => {
   console.log('Connected to MongoDB');

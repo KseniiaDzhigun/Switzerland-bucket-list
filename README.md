@@ -1,9 +1,9 @@
 # react-mesto-api-full
 Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. 
 
-# IP  
+### IP  
 158.160.56.115
-# Frontend  
+### Frontend  
 https://dzhigun.students.nomoredomains.rocks/
-# Backend  
+### Backend  
 https://api.dzhigun.nomoredomains.rocks/

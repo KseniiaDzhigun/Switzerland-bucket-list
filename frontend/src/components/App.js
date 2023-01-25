@@ -106,7 +106,7 @@ function App() {
         console.log(`Ошибка: ${err}`)
       });
     }
-  }, [loggedIn]) //Передаем в зависимости пустой массив, эффект будет вызван всего один раз
+  }, [loggedIn]) 
 
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
@@ -147,7 +147,6 @@ function App() {
       // Запрос для проверки валидности токена и получения email для вставки в шапку сайта
       Auth.checkToken(token).then((res) => {
         if (res) {
-          setUserEmail(res.email);
           setLoggedIn(true);
           history.push('/');
         }
@@ -189,6 +188,7 @@ function App() {
     Auth.login(data).then((res) => {
       //Сохраняем в localStorage id пользователя, так как токен приходит в куках
       localStorage.setItem('userId', res._id);
+      setUserEmail(res.email);
       setLoggedIn(true);
       history.push('/');
     }).catch((err) => {
@@ -205,18 +205,13 @@ function App() {
       setLoggedIn(false);
       localStorage.removeItem('userId');
       history.push('/');
+      setUserEmail('');
     }).catch((err) => {
       console.log(`Не удалось выйти из профиля: ${err}`)
     }).finally(() => {
       setLoading(false);
     })
   }
-
-  // function handleLogout() {
-  //   setLoggedIn(false);
-  //   localStorage.removeItem('userId');
-  //   history.push('/');
-  // }
 
   if (loading) {
     return <div>...Loading</div>

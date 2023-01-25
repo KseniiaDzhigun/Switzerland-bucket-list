@@ -1,11 +1,11 @@
 // Миддлвэр для защиты авторизацией всех маршрутов, кроме страницы регистрации и логина
 const jwt = require('jsonwebtoken');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 const UnauthorizedError = require('../errors/unauthorized-err');
 const {
   UNAUTHORIZED_MESSAGE_AUTH,
 } = require('../utils/constants');
-
-const JWT_SECRET = 'e227050e57812d82451696746263de45d9e20926b9cbdfa29ecdbba5ac7a3cfe';
 
 // eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(
       token,
-      JWT_SECRET,
+      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
     );
   } catch (err) {
     return next(new UnauthorizedError(UNAUTHORIZED_MESSAGE_AUTH));

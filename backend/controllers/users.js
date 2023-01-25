@@ -1,3 +1,4 @@
+const { NODE_ENV, JWT_SECRET } = process.env;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const BadRequestError = require('../errors/bad-request-err');
@@ -14,9 +15,6 @@ const {
   UNAUTHORIZED_MESSAGE_LOGIN,
   CONFLICT_MESSAGE,
 } = require('../utils/constants');
-
-// Захардкорили подпись в коде, дальше нужно перенести в файл .env
-const JWT_SECRET = 'e227050e57812d82451696746263de45d9e20926b9cbdfa29ecdbba5ac7a3cfe';
 
 const getUsers = async (req, res, next) => {
   try {
@@ -148,7 +146,7 @@ const login = async (req, res, next) => {
     }
     const token = jwt.sign(
       { _id: user._id },
-      JWT_SECRET,
+      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
       { expiresIn: '7d' },
     );
     // Записываем JWT в httpOnly куку

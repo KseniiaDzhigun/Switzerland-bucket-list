@@ -147,6 +147,7 @@ function App() {
       // Запрос для проверки валидности токена и получения email для вставки в шапку сайта
       Auth.checkToken(token).then((res) => {
         if (res) {
+          setUserEmail(res.email);
           setLoggedIn(true);
           history.push('/');
         }

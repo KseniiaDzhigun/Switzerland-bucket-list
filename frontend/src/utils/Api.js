@@ -103,7 +103,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.dzhigun.nomoredomains.rocks',
+  //baseUrl: 'https://api.dzhigun.nomoredomains.rocks',
+  baseUrl: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json'
   }

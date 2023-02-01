@@ -25,11 +25,8 @@ const deleteCardById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const card = await Card.findById(id);
-
-    if (!card) {
-      return next(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
-    }
+    const card = await Card.findById(id)
+      .orFail(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
 
     // У пользователя не должно быть возможности удалять карточки других пользователей
     if (req.user._id !== String(card.owner._id)) {
@@ -69,11 +66,9 @@ const putLike = async (req, res, next) => {
       cardId,
       { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
       { new: true }, // обработчик then получит на вход обновлённую запись
-    ).populate('owner');
-
-    if (!cardWithLike) {
-      return next(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
-    }
+    )
+      .populate('owner')
+      .orFail(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
 
     return res.status(CREATED).json(cardWithLike);
   } catch (e) {
@@ -92,11 +87,9 @@ const removeLike = async (req, res, next) => {
       cardId,
       { $pull: { likes: req.user._id } }, // убрать _id из массива
       { new: true }, // обработчик then получит на вход обновлённую запись
-    ).populate('owner');
-
-    if (!cardWithoutLike) {
-      return next(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
-    }
+    )
+      .populate('owner')
+      .orFail(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
 
     return res.status(OK).json(cardWithoutLike);
   } catch (e) {

@@ -29,11 +29,11 @@ const getUsers = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id);
-
-    if (!user) {
-      return next(new NotFoundError(NOT_FOUND_MESSAGE_USER));
-    }
+    const user = await User.findById(id)
+      .orFail(new NotFoundError(NOT_FOUND_MESSAGE_USER));
+    // Конструкция orFail заменяет  if (!user) {
+    //   return next(new NotFoundError(NOT_FOUND_MESSAGE_USER));
+    // }
 
     return res.status(OK).json(user);
   } catch (e) {
@@ -46,11 +46,8 @@ const getUserById = async (req, res, next) => {
 
 const getCurrentUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
-
-    if (!user) {
-      return next(new NotFoundError(NOT_FOUND_MESSAGE_USER));
-    }
+    const user = await User.findById(req.user._id)
+      .orFail(new NotFoundError(NOT_FOUND_MESSAGE_USER));
 
     return res.status(OK).json(user);
   } catch (e) {
@@ -92,11 +89,8 @@ const updateUser = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(req.user._id, { name, about }, {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
-    });
-
-    if (!user) {
-      return next(new NotFoundError(NOT_FOUND_MESSAGE_USER));
-    }
+    })
+      .orFail(new NotFoundError(NOT_FOUND_MESSAGE_USER));
 
     return res.status(OK).json(user);
   } catch (e) {
@@ -114,11 +108,8 @@ const updateAvatar = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(req.user._id, { avatar }, {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
-    });
-
-    if (!user) {
-      return next(new NotFoundError(NOT_FOUND_MESSAGE_USER));
-    }
+    })
+      .orFail(new NotFoundError(NOT_FOUND_MESSAGE_USER));
 
     return res.status(OK).json(user);
   } catch (e) {
@@ -136,10 +127,9 @@ const login = async (req, res, next) => {
       email, password,
     } = req.body;
     // Здесь в объекте user будет хеш пароля
-    const user = await User.findOne({ email }).select('+password');
-    if (!user) {
-      return next(new UnauthorizedError(UNAUTHORIZED_MESSAGE_LOGIN));
-    }
+    const user = await User.findOne({ email }).select('+password')
+      .orFail(new UnauthorizedError(UNAUTHORIZED_MESSAGE_LOGIN));
+
     const matched = await bcrypt.compare(password, user.password);
     if (!matched) {
       return next(new UnauthorizedError(UNAUTHORIZED_MESSAGE_LOGIN));

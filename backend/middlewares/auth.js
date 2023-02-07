@@ -7,7 +7,6 @@ const {
   UNAUTHORIZED_MESSAGE_AUTH,
 } = require('../utils/constants');
 
-// eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
   if (!token) {
@@ -25,5 +24,5 @@ module.exports = (req, res, next) => {
   }
   req.user = payload; // записываем пейлоуд в объект запроса, в нашем случае id
 
-  next(); // пропускаем запрос дальше
+  return next(); // пропускаем запрос дальше
 };

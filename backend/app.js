@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const { errorLogger } = require('express-winston');
 const cors = require('cors');
 
 const { PORT, DB_URL } = process.env;
@@ -12,7 +11,7 @@ const router = require('./routes');
 const { NOT_FOUND_MESSAGE_PATH } = require('./utils/constants');
 const NotFoundError = require('./errors/not-found-err');
 const err = require('./middlewares/err');
-const { requestLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 app.use(cookieParser()); // Объект req будет обогащаться cookies

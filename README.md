@@ -27,7 +27,7 @@ MongoDB is used as the database for storing and retrieval user information and p
 - User authentication: Users can sign up, log in, and log out.
 - Photo management: Users can upload and delete their own photos.
 - Likes and dislikes: Users can like or dislike photos uploaded by other users.
-- User profile: Users can view and update their profile information, including their name, about section, and profile picture.
+- User profile: Users can view and update their profile information, including their name, personal information, and profile picture.
 
 ## Installation
 

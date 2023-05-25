@@ -10,7 +10,12 @@
 
 @media screen and (max-width: 619px) {
   .header__logo {
-    width: 103.74px;
-    height: 24.4px;
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header__logo {
+    width: 80px;
   }
 }

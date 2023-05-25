@@ -6,20 +6,20 @@ function ConfirmDeletePopup({ isOpen, onClose, onConfirmDelete }) {
     const [buttonName, setButtonName] = useState('');
 
     useEffect(() => {
-        isOpen && setButtonName('Да');
+        isOpen && setButtonName('Yes');
     }, [isOpen])
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        setButtonName('Удаление...')
+        setButtonName('Deleting...')
 
         onConfirmDelete();
     }
 
     return (
         <PopupWithForm
-            title="Вы уверены?"
+            title="Delete this post?"
             name="submit"
             children={''}
             button={buttonName}

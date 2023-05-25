@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
-import logo from '../images/header-logo.svg';
+import logo from '../images/header-logo-bucketlist.svg';
 
-//В хедере в зависимости от страницы, на которой мы находимся, будут отображаться разные ссылки: "Регистрация", "Войти", "[email пользователя] Выйти"
+//The header will display different links depending on the page we are on: "Register", "Login", "[email user] Logout"
 
 function Header({ alt, email, onLogout }) {
     return (
@@ -15,14 +14,14 @@ function Header({ alt, email, onLogout }) {
             <div className="header__navigation">
                 <Switch>
                     <Route path="/sign-in">
-                        <Link to="/sign-up" className="header__link">Регистрация</Link>
+                        <Link to="/sign-up" className="header__link">SIGN UP</Link>
                     </Route>
                     <Route path="/sign-up">
-                        <Link to="/sign-in" className="header__link">Войти</Link>
+                        <Link to="/sign-in" className="header__link">SIGN IN</Link>
                     </Route>
                     <Route exact path="/">
                         <p className="header__user-email">{email}</p>
-                        <Link to="/sign-in" onClick={onLogout} className="header__link header__link_type_logout">Выйти</Link>
+                        <Link to="/sign-in" onClick={onLogout} className="header__link header__link_type_logout">SIGN OUT</Link>
                     </Route>
                 </Switch>
             </div>

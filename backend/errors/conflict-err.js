@@ -1,4 +1,4 @@
-// Конструктор наследует от стандартной ошибки и выставляет свойство statusCode
+// Constructor inherits from standard error and sets the statusCode property
 
 class ConflictError extends Error {
   constructor(message) {

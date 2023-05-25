@@ -7,7 +7,6 @@ const { joiValidateId, joiValidateCardId, joiValidateCard } = require('../utils/
 
 router.get('/', getCards);
 
-// Тела, параметры запросов к серверу должны валидироваться до передачи обработки в контроллеры
 router.delete('/:id', joiValidateId(), deleteCardById);
 
 router.post('/', joiValidateCard(), createCard);

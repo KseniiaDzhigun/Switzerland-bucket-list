@@ -1,5 +1,3 @@
-//Класс Api отвечает за работу с API, методы этого класса - запросы к серверу
-
 class Api {
   constructor(setting) {
     this._address = setting.baseUrl;
@@ -10,7 +8,6 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`)
   }
 
@@ -29,7 +26,6 @@ class Api {
     })
       .then(this._handleResponse);
   }
-
 
   getInitialData() {
     return Promise.all([this.getInitialUserInfo(), this.getInitialCards()]);
@@ -82,12 +78,11 @@ class Api {
       .then(this._handleResponse);
   }
 
-  //В зависимости от того, есть ли уже лайк на карточке ставим лайк или убираем лайк
   putLikeCard(id, isLiked) {
     if (isLiked) {
       return this._removeLikeCard(id);
     } else {
-      return this._addLikeCard(id);
+      return this._addLikeCard(id); 
     }
   }
 

@@ -1,24 +1,18 @@
-const BAD_REQUEST_MESSAGE = 'Передан невалидный id';
-const NOT_FOUND_MESSAGE_USER = 'Пользователь не найден';
-const NOT_FOUND_MESSAGE_CARD = 'Карточка не найдена';
-const NOT_FOUND_MESSAGE_PATH = 'Путь не найден';
+const BAD_REQUEST_MESSAGE = 'Invalid id sent';
+const NOT_FOUND_MESSAGE_USER = 'User not found';
+const NOT_FOUND_MESSAGE_CARD = 'Card not found';
+const NOT_FOUND_MESSAGE_PATH = 'Path not found';
 const INTERNAL_SERVER_ERROR = 500;
-const INTERNAL_SERVER_ERROR_MESSAGE = 'Произошла ошибка';
+const INTERNAL_SERVER_ERROR_MESSAGE = 'An error has occurred';
 const OK = 200;
-const OK_MESSAGE = 'Пост удалён';
+const OK_MESSAGE = 'The post has been deleted';
 const CREATED = 201;
-const UNAUTHORIZED_MESSAGE_LOGIN = 'Неправильные почта или пароль';
-const UNAUTHORIZED_MESSAGE_AUTH = 'Необходима авторизация';
-const FORBIDDEN_MESSAGE = 'Вы не можете удалять карточки других пользователей';
-const CONFLICT_MESSAGE = 'Пользователь с таким email уже существует';
+const UNAUTHORIZED_MESSAGE_LOGIN = 'Incorrect mail or password';
+const UNAUTHORIZED_MESSAGE_AUTH = 'Authorization required';
+const FORBIDDEN_MESSAGE = 'You cannot delete other users cards';
+const CONFLICT_MESSAGE = 'A user with this email already exists';
 
 const REGEX_URL = /^https?:\/\/(www.)?[\w-.~:/?#[\]@!$&'()*+,;=]+\.[a-zA-z]+(\/[\w-.~:/?#[\]@!$&'()*+,;=]+)*#?$/;
-// Шаблон находит url таких форматов:
-// http://ya.ru
-// https://www.ya.ru
-// http://2-domains.ru
-// http://ya.ru/path/to/deep/
-// http://ya-ya-ya.ru
 
 module.exports = {
   BAD_REQUEST_MESSAGE,

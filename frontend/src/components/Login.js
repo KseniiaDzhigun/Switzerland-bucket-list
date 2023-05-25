@@ -23,14 +23,14 @@ const Login = ({ onLogin }) => {
     return (
         <main className="content">
             <section className="sign">
-                <h2 className="sign__title">Вход</h2>
+                <h2 className="sign__title">Alreaday have an account?</h2>
                 <form className="sign__form" onSubmit={handleSubmit} >
                     <fieldset className="sign__form-set">
                         <input value={userData.email} onChange={handleChange} id="email-input" type="email" name="email" placeholder="Email"
                             className="sign__input sign__input_type_email" minLength="3" maxLength="30" required />
-                        <input value={userData.password} onChange={handleChange} id="password-input" type="password" name="password" placeholder="Пароль"
+                        <input value={userData.password} onChange={handleChange} id="password-input" type="password" name="password" placeholder="Password"
                             className="sign__input sign__input_type_password" required />
-                        <button type="submit" className="sign__submit-button">Войти</button>
+                        <button type="submit" className="sign__submit-button">SIGN IN</button>
                     </fieldset>
                 </form>
             </section>

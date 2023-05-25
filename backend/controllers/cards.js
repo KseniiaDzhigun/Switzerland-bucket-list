@@ -28,7 +28,7 @@ const deleteCardById = async (req, res, next) => {
     const card = await Card.findById(id)
       .orFail(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
 
-    // У пользователя не должно быть возможности удалять карточки других пользователей
+    // A user should not be able to delete other users cards
     if (req.user._id !== String(card.owner._id)) {
       return next(new ForbiddenError(FORBIDDEN_MESSAGE));
     }
@@ -64,8 +64,8 @@ const putLike = async (req, res, next) => {
 
     const cardWithLike = await Card.findByIdAndUpdate(
       cardId,
-      { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
-      { new: true }, // обработчик then получит на вход обновлённую запись
+      { $addToSet: { likes: req.user._id } }, // add _id to the array if it is not there
+      { new: true }, // then handler will receive the updated record as input
     )
       .populate('owner')
       .orFail(new NotFoundError(NOT_FOUND_MESSAGE_CARD));
@@ -85,8 +85,8 @@ const removeLike = async (req, res, next) => {
 
     const cardWithoutLike = await Card.findByIdAndUpdate(
       cardId,
-      { $pull: { likes: req.user._id } }, // убрать _id из массива
-      { new: true }, // обработчик then получит на вход обновлённую запись
+      { $pull: { likes: req.user._id } },
+      { new: true },
     )
       .populate('owner')
       .orFail(new NotFoundError(NOT_FOUND_MESSAGE_CARD));

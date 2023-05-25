@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
   } catch (err) {
     return next(new UnauthorizedError(UNAUTHORIZED_MESSAGE_AUTH));
   }
-  req.user = payload; // записываем пейлоуд в объект запроса, в нашем случае id
+  req.user = payload; // write payload to the request object, in this case id
 
-  return next(); // пропускаем запрос дальше
+  return next();
 };

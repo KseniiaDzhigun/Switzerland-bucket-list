@@ -8,37 +8,35 @@ const userSchema = new mongoose.Schema(
       type: String,
       minLength: 2,
       maxLength: 30,
-      default: 'Жак-Ив Кусто',
+      default: 'My name is ...',
     },
     about: {
       type: String,
       minLength: 2,
       maxLength: 30,
-      default: 'Исследователь',
+      default: 'I am Explorer',
     },
     avatar: {
       type: String,
-      // Используем регулярное выражение для валидации поля
       validate: {
         validator: (v) => REGEX_URL.test(v),
-        message: (props) => `${props.value} не валидная ссылка`,
+        message: (props) => `${props.value} link is not valid`,
       },
-      default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+      default: 'https://i.postimg.cc/qBFHnczL/interlaken-hiking-guide-hikes-near-interlaken-04228.jpg',
     },
     email: {
       type: String,
       unique: true,
       required: true,
-      // Используем метод isEmail модуля Validator
       validate: {
         validator: (email) => validator.isEmail(email),
-        message: (props) => `${props.value} не валидный email!`,
+        message: (props) => `${props.value} email is not valid!`,
       },
     },
     password: {
       type: String,
       required: true,
-      // По умолчанию хеш пароля пользователя не будет возвращаться из базы
+      // By default the user password hash will not be returned from the database
       select: false,
     },
   },

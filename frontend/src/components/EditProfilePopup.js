@@ -5,7 +5,6 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext'
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     const currentUser = useContext(CurrentUserContext);
 
-    // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах
     useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
@@ -14,7 +13,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     const [buttonName, setButtonName] = useState('');
 
     useEffect(() => {
-        isOpen && setButtonName('Сохранить');
+        isOpen && setButtonName('SAVE');
     }, [isOpen])
 
 
@@ -32,9 +31,9 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     function handleSubmit(e) {
         e.preventDefault();
 
-        setButtonName('Сохранение...')
+        setButtonName('Is loading...')
 
-        // Передаём значения управляемых компонентов во внешний обработчик
+        // Pass the values of controlled components to the external handler
         onUpdateUser({
             name,
             about: description,
@@ -43,7 +42,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
     return (
         <PopupWithForm
-            title="Редактировать профиль"
+            title="Edit profile"
             name="edit"
             button={buttonName}
             isOpen={isOpen}

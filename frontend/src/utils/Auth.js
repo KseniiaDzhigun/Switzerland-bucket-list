@@ -5,7 +5,6 @@ const handleResponse = (res) => {
     if (res.ok) {
         return res.json();
     }
-    // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`)
 }
 
@@ -46,8 +45,8 @@ export const checkToken = (token) => {
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}`,
         }
     })
         .then(handleResponse)
 }
+

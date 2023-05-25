@@ -2,23 +2,22 @@ import React, { useRef, useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-    
-    // Записываем объект, возвращаемый хуком, в переменную
+
+    // Write the object returned by the hook into a variable
     const inputRef = useRef();
 
     const [buttonName, setButtonName] = useState('');
 
     useEffect(() => {
-        isOpen && setButtonName('Сохранить');
+        isOpen && setButtonName('SAVE');
 
-        //Вызываем нужный метод на поле current объекта
         inputRef.current.value = '';
     }, [isOpen])
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        setButtonName('Сохранение...')
+        setButtonName('Is loading...')
 
         onUpdateAvatar({
             avatar: inputRef.current.value,
@@ -27,15 +26,15 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
     return (
         <PopupWithForm
-            title="Обновить аватар"
+            title="Update your avatar"
             name="avatar"
             button={buttonName}
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
         >
-            {/* Указали элементу input атрибут ref => получили прямой доступ к DOM-элементу */}
-            <input ref={inputRef} id="avatar-url-input" type="url" name="avatar" placeholder="Ссылка на картинку"
+            {/* Specifying the ref attribute to the input element => accessing the DOM element directly */}
+            <input ref={inputRef} id="avatar-url-input" type="url" name="avatar" placeholder="Image link"
                 className="popup__input popup__input_type_link" required />
             <span className="avatar-url-input-error popup__error"></span>
         </PopupWithForm>

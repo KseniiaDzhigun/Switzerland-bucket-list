@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card({ card, onCardClick, onCardLike, onCardDelete}) {
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
     const currentUser = useContext(CurrentUserContext);
 
@@ -9,7 +9,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete}) {
 
     const isLiked = card.likes.some(id => id === currentUser._id);
 
-    //Задаём обработчику (пробрасывается в виде пропса через Main и App) нужное значение с данными карточки
+    //Set the handler desired value with the card data (as a props via Main and App)
     const handleCardClick = () => {
         onCardClick(card);
     }

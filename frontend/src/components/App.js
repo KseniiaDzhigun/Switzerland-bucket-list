@@ -39,7 +39,7 @@ function App() {
       api.getInitialUserInfo().then((initialUserInfo) => {
         setCurrentUser(initialUserInfo);
       }).catch((err) => {
-        console.log(`Ошибка: ${err}`)
+        console.log(`Error: ${err}`)
       });
     }
   }, [loggedIn])
@@ -71,7 +71,7 @@ function App() {
       setCurrentUser(updatedUserInfo);
       closeAllPopups();
     }).catch((err) => {
-      console.log(`Ошибка: ${err}`)
+      console.log(`Error: ${err}`)
     });
   }
 
@@ -80,18 +80,18 @@ function App() {
       setCurrentUser(updatedUserInfo);
       closeAllPopups();
     }).catch((err) => {
-      console.log(`Ошибка: ${err}`)
+      console.log(`Error: ${err}`)
     });
   }
 
   function handleAddPlaceSubmit(data) {
     api.addNewCard(data).then((newCard) => {
-      //Обновляем стейт cards с помощью расширенной копии текущего массива, используя оператор ...
-      //Новая карточка добавляется в начале списка
+      //Update the cards state using an extended copy of the current array, using operator ...
+      //The new card is added at the beginning of the list
       setCards([newCard, ...cards]);
       closeAllPopups();
     }).catch((err) => {
-      console.log(`Ошибка: ${err}`)
+      console.log(`Error: ${err}`)
     });
   }
 
@@ -103,21 +103,19 @@ function App() {
       api.getInitialCards().then((initialCards) => {
         setCards(initialCards.reverse());
       }).catch((err) => {
-        console.log(`Ошибка: ${err}`)
+        console.log(`Error: ${err}`)
       });
     }
-  }, [loggedIn]) 
+  }, [loggedIn])
 
   function handleCardLike(card) {
-    // Проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(id => id === currentUser._id);
 
-    //Реакт перерисовает только карточку, на которую поставили/убрали лайк. При обновлении стейта передаем колбэк 
-    //На вход идет значение текущего стейта, на выход — не совершенно новое, а обновленное значение карточек
+    //React only redraws the card that was liked. When updating the state, pass the callback 
     api.putLikeCard(card._id, isLiked).then((newCard) => {
       setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
     }).catch((err) => {
-      console.log(`Ошибка: ${err}`)
+      console.log(`Error: ${err}`)
     });
   }
 
@@ -133,18 +131,17 @@ function App() {
 
   function handleConfirmDeleteCard() {
     api.deleteCard(selectedCard._id).then(() => {
-      //После запроса в API, обновляем стейт cards с помощью метода filter: создаем копию массива, исключив из него удалённую карточку
+      //After a request to the API, update the cards state with filter method: create a copy of the array, excluding the deleted card
       setCards(cards => cards.filter((cardItem) => cardItem._id !== selectedCard._id));
       closeAllPopups();
     }).catch((err) => {
-      console.log(`Ошибка: ${err}`)
+      console.log(`Error: ${err}`)
     });
   }
 
   function authCheck() {
     const token = localStorage.getItem('userId');
     if (token) {
-      // Запрос для проверки валидности токена и получения email для вставки в шапку сайта
       Auth.checkToken(token).then((res) => {
         if (res) {
           setUserEmail(res.email);
@@ -153,19 +150,18 @@ function App() {
         }
       }).catch((err) => {
         setLoggedIn(false);
-        console.log(`Переданный токен некорректен : ${err}`)
+        console.log(`Token is incorrect : ${err}`)
       }).finally(() => {
         setLoading(false);
       })
     }
   }
 
-  //Проверяем валидность токена при запуске/обновлении страницы только один раз
+  //Validating token on page startup/update only once
   useEffect(() => {
     authCheck()
   }, []);
 
-  //Используем хук для перекидывания пользователя по страницам
   const history = useHistory();
 
   function handleRegister(data) {
@@ -187,14 +183,14 @@ function App() {
   function handleLogin(data) {
     setLoading(true);
     Auth.login(data).then((res) => {
-      //Сохраняем в localStorage id пользователя, так как токен приходит в куках
+      //Saving user id in localStorage, as the token comes in cookies
       localStorage.setItem('userId', res._id);
       setUserEmail(res.email);
       setLoggedIn(true);
       history.push('/');
     }).catch((err) => {
       setLoggedIn(false);
-      console.log(`Пользователь не найден : ${err}`)
+      console.log(`User is not found : ${err}`)
     }).finally(() => {
       setLoading(false);
     })
@@ -208,7 +204,7 @@ function App() {
       history.push('/');
       setUserEmail('');
     }).catch((err) => {
-      console.log(`Не удалось выйти из профиля: ${err}`)
+      console.log(`Unable to log out: ${err}`)
     }).finally(() => {
       setLoading(false);
     })
@@ -219,19 +215,18 @@ function App() {
   }
 
 
-  //Вся функциональность приложения будет доступна только авторизованным пользователям по роуту /
-  //Если неавторизованный пользователь приходит на сайт, он должен попадать на страницу входа, на какой бы роут он ни пришёл
+  //All application functionality will only be available to authorised users via router /
+  //If an unauthorised user comes to the site, they should be taken to the login page, whichever router they come to
 
   return (
-    //Используем данные из currentUser для всех элементов с помощью провайдера контекста
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header alt="логотип Mesto Russia" email={userEmail} onLogout={handleLogout} />
+        <Header alt="logo Switzerland Bucket List" email={userEmail} onLogout={handleLogout} />
         <Switch>
 
           <ProtectedRoute exact path="/"
             component={Main}
-            alt="Аватар пользователя"
+            alt="user avatar"
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
@@ -253,7 +248,7 @@ function App() {
 
         </Switch>
 
-        <Footer year="2022" name="Mesto Russia" />
+        <Footer year="2023" name="Switzerland Bucket List" />
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 

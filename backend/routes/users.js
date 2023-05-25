@@ -8,7 +8,6 @@ const { joiValidateId, joiValidateAvatar, joiValidateProfile } = require('../uti
 router.get('/', getUsers);
 router.get('/me', getCurrentUser);
 
-// Тела, параметры запросов к серверу должны валидироваться до передачи обработки в контроллеры
 router.get('/:id', joiValidateId(), getUserById);
 
 router.patch('/me/avatar', joiValidateAvatar(), updateAvatar);

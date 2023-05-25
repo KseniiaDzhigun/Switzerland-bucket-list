@@ -9,7 +9,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     const [buttonName, setButtonName] = useState('');
 
     useEffect(() => {
-        isOpen && setButtonName('Сохранить');
+        isOpen && setButtonName('SAVE');
         setName('');
         setLink('');
     }, [isOpen])
@@ -25,9 +25,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     function handleSubmit(e) {
         e.preventDefault();
 
-        setButtonName('Сохранение...')
+        setButtonName('Is loading...')
 
-        // Передаём значения управляемых компонентов во внешний обработчик
+        // Pass the values of controlled components to the external handler
         onAddPlace({
             name,
             link,
@@ -36,17 +36,17 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
     return (
         <PopupWithForm
-            title="Новое место"
+            title="New place"
             name="add"
             button={buttonName}
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
         >
-            <input value={name} onChange={handleNameChange} id="place-input" type="text" name="name" placeholder="Название"
+            <input value={name} onChange={handleNameChange} id="place-input" type="text" name="name" placeholder="Name"
                 className="popup__input popup__input_type_place" minLength="2" maxLength="30" required />
             <span className="place-input-error popup__error"></span>
-            <input value={link} onChange={handleLinkChange} id="url-input" type="url" name="link" placeholder="Ссылка на картинку"
+            <input value={link} onChange={handleLinkChange} id="url-input" type="url" name="link" placeholder="Image link"
                 className="popup__input popup__input_type_link" required />
             <span className="url-input-error popup__error"></span>
         </PopupWithForm>

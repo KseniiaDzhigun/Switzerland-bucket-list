@@ -21,7 +21,7 @@ const getUsers = async (req, res, next) => {
     const users = await User.find({});
     return res.status(OK).json(users);
   } catch (e) {
-    // Вызываем next с аргументом-ошибкой - запрос перейдёт в обработчик ошибки
+    // Call next with an error argument - the request will go to the error handler
     return next(e);
   }
 };
@@ -31,7 +31,7 @@ const getUserById = async (req, res, next) => {
     const { id } = req.params;
     const user = await User.findById(id)
       .orFail(new NotFoundError(NOT_FOUND_MESSAGE_USER));
-    // Конструкция orFail заменяет  if (!user) {
+    // orFail replaces  if (!user) {
     //   return next(new NotFoundError(NOT_FOUND_MESSAGE_USER));
     // }
 
@@ -87,8 +87,8 @@ const updateUser = async (req, res, next) => {
   try {
     const { name, about } = req.body;
     const user = await User.findByIdAndUpdate(req.user._id, { name, about }, {
-      new: true, // обработчик then получит на вход обновлённую запись
-      runValidators: true, // данные будут валидированы перед изменением
+      new: true, // then handler will receive the updated record as input
+      runValidators: true, // data will be validated before changing
     })
       .orFail(new NotFoundError(NOT_FOUND_MESSAGE_USER));
 
@@ -106,8 +106,8 @@ const updateAvatar = async (req, res, next) => {
   try {
     const { avatar } = req.body;
     const user = await User.findByIdAndUpdate(req.user._id, { avatar }, {
-      new: true, // обработчик then получит на вход обновлённую запись
-      runValidators: true, // данные будут валидированы перед изменением
+      new: true,
+      runValidators: true,
     })
       .orFail(new NotFoundError(NOT_FOUND_MESSAGE_USER));
 
@@ -126,7 +126,7 @@ const login = async (req, res, next) => {
     const {
       email, password,
     } = req.body;
-    // Здесь в объекте user будет хеш пароля
+    // Here in the user object will be the password hash
     const user = await User.findOne({ email }).select('+password')
       .orFail(new UnauthorizedError(UNAUTHORIZED_MESSAGE_LOGIN));
 
@@ -139,15 +139,14 @@ const login = async (req, res, next) => {
       NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
       { expiresIn: '7d' },
     );
-    // Записываем JWT в httpOnly куку
+    // Write JWT in httpOnly Cookies
     return res
       .cookie('jwt', token, {
-        // token - наш JWT токен, который мы отправляем
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
       })
-      // .send({ message: 'Токен записан' });
+      // .send({ message: 'Token is written' });
       .status(OK).json({
         name: user.name,
         about: user.about,

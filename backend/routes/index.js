@@ -9,12 +9,11 @@ router.post('/signin', joiValidateLogin(), login);
 
 router.post('/signup', joiValidateUser(), createUser);
 
-// Роут signout, который очищает куки
 router.get('/signout', (req, res) => {
   res.clearCookie('jwt').send({ message: 'Выход' });
 });
 
-// Защищаем авторизацией все маршруты, кроме страницы регистрации и логина
+// Protect all routes except for the registration and login page with authorisation
 router.use(auth);
 
 router.use('/users', userRouter);

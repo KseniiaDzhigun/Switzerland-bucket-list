@@ -1,6 +1,6 @@
-# React Mesto API Full
+# Switzerland-bucket-list
 
-React Mesto API Full is a full-stack web application that allows users to share and explore photos of different places in Switzerland, find ideas for future trips.
+Switzerland-bucket-list is a full-stack web application that allows users to share and explore photos of different places in Switzerland, find ideas for future trips.
 
 Users can sign up, log in, upload and delete their own photos, as well as like and dislike photos uploaded by other users.
 
@@ -14,7 +14,7 @@ Users can sign up, log in, upload and delete their own photos, as well as like a
 
 ## Project Description
 
-React Mesto API Full is a full-stack web application developed using the MERN stack (MongoDB, Express.js, React.js, and Node.js).
+Switzerland Bucket List is a full-stack web application developed using the MERN stack (MongoDB, Express.js, React.js, and Node.js).
 
 The frontend is built using React.js, providing an interactive and responsive user interface. 
 
@@ -34,10 +34,10 @@ MongoDB is used as the database for storing and retrieval user information and p
 To install and set up the project locally, follow these steps:
 
 1. Clone the repository:
-git clone https://github.com/KseniiaDzhigun/react-mesto-api-full.git
+git clone https://github.com/KseniiaDzhigun/Switzerland-bucket-list.git
 
 2. Navigate to the project directory:
-cd react-mesto-api-full
+cd Switzerland-bucket-list
 
 3. Install the dependencies for both the backend and frontend:
 
